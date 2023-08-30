@@ -14,16 +14,16 @@ import java.time.Duration;
 public class Example8_3 {
     public static void main(String[] args) throws InterruptedException {
         Flux
-            .interval(Duration.ofMillis(1L))
-            .onBackpressureDrop(dropped -> log.info("# dropped: {}", dropped))
-            .publishOn(Schedulers.parallel())
+            .interval(Duration.ofMillis(1L)) // 1밀리초마다 순차적으로 증가하는 Long 값을 생성하는 Flux 생성
+            .onBackpressureDrop(dropped -> log.info("# dropped: {}", dropped)) // 백프레셔가 발생했을 때 드롭된 요소의 정보를 로그로 출력
+            .doOnNext(data -> log.info("$ do OnNext: {} ", data)) // 각 요소가 소비되기 전에 로그로 출력
+            .publishOn(Schedulers.parallel()) // 이후의 작업을 병렬 스레드로 실행하도록 스케줄링
             .subscribe(data -> {
-                        try {
-                            Thread.sleep(5L);
-                        } catch (InterruptedException e) {}
-                        log.info("# onNext: {}", data);
+                        try {Thread.sleep(5L);} catch (InterruptedException e) {} // 5밀리초 동안 스레드 일시 정지
+                        log.info("# onNext: {}", data); // 각 요소를 로그로 출력
+                        log.info("-----------------------------------------------------"); // 에러 발생 시 에러 정보를 로그로 출력
                     },
-                    error -> log.error("# onError", error));
+                    error -> log.error("# onError", error)); // 메인 스레드를 2초간 일시 정지
 
         Thread.sleep(2000L);
     }

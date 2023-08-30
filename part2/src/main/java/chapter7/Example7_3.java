@@ -32,7 +32,7 @@ public class Example7_3 {
         return WebClient.create()
                 .get()
                 .uri(worldTimeUri)
-                .retrieve()
+                .retrieve()// Request 전송
                 .bodyToMono(String.class)
                 .map(response -> {
                     DocumentContext jsonContext = JsonPath.parse(response);

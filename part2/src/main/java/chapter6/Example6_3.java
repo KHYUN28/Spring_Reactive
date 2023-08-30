@@ -33,7 +33,7 @@ public class Example6_3 {
 
 
         Mono.just(
-                    restTemplate
+                    restTemplate //DataSource
                             .exchange(worldTimeUri,
                                     HttpMethod.GET,
                                     new HttpEntity<String>(headers),
@@ -44,7 +44,7 @@ public class Example6_3 {
                     String dateTime = jsonContext.read("$.datetime");
                     return dateTime;
                 })
-                .subscribe(
+                .subscribe( // 선언적 프로그래밍 subscribe 실행될때 실행됨.
                         data -> System.out.println("# emitted data: " + data),
                         error -> {
                             System.out.println(error);

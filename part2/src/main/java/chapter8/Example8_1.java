@@ -14,19 +14,22 @@ import reactor.core.publisher.Flux;
 public class Example8_1 {
     public static void main(String[] args) {
         Flux.range(1, 5)
-            .doOnRequest(data -> log.info("# doOnRequest: {}", data))
+            .doOnRequest(data -> log.info("# --------------- doOnRequest: {}", data))
             .subscribe(new BaseSubscriber<Integer>() {
                 @Override
                 protected void hookOnSubscribe(Subscription subscription) {
-                    request(1);
+                  log.info("@ Start hookOnSubscribe");
+                  request(1); // request가 호출되기 직전에 doOnRequest() 실행 [long.MAX.VALUE]
+                  log.info("@ End hookOnSubscribe"); // 맨 마지막에 return
                 }
 
                 @SneakyThrows
                 @Override
                 protected void hookOnNext(Integer value) {
                     Thread.sleep(2000L);
-                    log.info("# hookOnNext: {}", value);
+                    log.info("# + hookOnNext: {}", value);
                     request(1);
+                    log.info("# - hookOnNext: {}", value);
                 }
             });
     }
