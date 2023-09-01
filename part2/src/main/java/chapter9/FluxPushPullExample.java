@@ -24,7 +24,7 @@ public class FluxPushPullExample {
         }
 
         // 메시지의 시뮬레이션 메서드
-        public List<String> getHistory(long n) {
+        public List<String> getHistory(long n) { // 10개
             return IntStream.range(0, (int) n)
                     .mapToObj(i -> "History-" + i) // 가상의 메시지를 생성하여 리스트로 반환
                     .collect(Collectors.toList()); // 종단 연산자 // <R, A> R collect(Collector<? super T, A, R> collector);
@@ -35,7 +35,7 @@ public class FluxPushPullExample {
         //  return new CollectorImpl<>((Supplier<List<T>>) ArrayList::new, List::add,
         //            (left, right) -> { left.addAll(right); return left; },
         //             CH_ID);
-        //  } 추상클래스나 인터페이스를 구현하는게 익명클래스
+        //  } 추상클래스나 인터페이스를 구현하는게 익명클래스 이건 컨스트럭터
 
         // 실제 메시지 발송 메서드 (예시)
         public void dispatchMessages() {
@@ -57,7 +57,7 @@ public class FluxPushPullExample {
                 }
             });
 
-            sink.onRequest(n -> {
+            sink.onRequest(n -> { // when subscriber call request method od subscription
                 if (n == Long.MAX_VALUE) {
                     log.warn("Unlimited request detected. Limiting to 1000 messages.");
                     n = 10; // 무제한 요청을 감지하면 제한을 설정하여 메시지 수를 제한
@@ -77,8 +77,8 @@ public class FluxPushPullExample {
                 () -> System.out.println("Stream completed") // 스트림 완료 시 처리
         );
 
-        // 메시지 발송 시뮬레이션
-//        myMessageProcessor.dispatchMessages();
+        // 메시지 발송 시뮬레이션 
+//        myMessageProcessor.dispatchMessages(); // 이 코드가 수신, dispatchMessages가 발신
     }
 }
 
