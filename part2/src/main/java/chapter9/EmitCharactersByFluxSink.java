@@ -10,6 +10,7 @@ public class EmitCharactersByFluxSink {
 
     public static void main(String[] args) {
         CharacterGenerator characterGenerator = new CharacterGenerator();
+
         List<Character> sequence1 = characterGenerator.generateCharacters().take(3).collectList().block();
         List<Character> sequence2 = characterGenerator.generateCharacters().take(2).collectList().block();
 
@@ -26,10 +27,8 @@ public class EmitCharactersByFluxSink {
         //    }
 
         CharacterCreator characterCreator = new CharacterCreator();
-        Thread producerThread1 = new Thread(
-                () -> characterCreator.consumer.accept(sequence1)); // run 메서드의 바디
-        Thread producerThread2 = new Thread(
-                () -> characterCreator.consumer.accept(sequence2));
+        Thread producerThread1 = new Thread( () -> characterCreator.consumer.accept(sequence1)); // run 메서드의 바디
+        Thread producerThread2 = new Thread( () -> characterCreator.consumer.accept(sequence2));
 
         //Thread.java 핵심코드
         //   @Override
@@ -47,9 +46,7 @@ public class EmitCharactersByFluxSink {
             producerThread2.start();
             producerThread1.join();
             producerThread2.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        } catch (InterruptedException e) {e.printStackTrace();}
 
         log.info("consolidated: {}", consolidated);
 

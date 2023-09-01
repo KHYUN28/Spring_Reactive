@@ -23,17 +23,13 @@ public class FluxPushExample {
         }
 
         // 이벤트를 시뮬레이션하는 메서드들
-        public void simulateDataChunks() {
-            listener.onDataChunk(List.of("data1", "data2", "data3"));
-        }
+        public void simulateDataChunks() {listener.onDataChunk(List.of("data1", "data2", "data3"));}
 
         public void simulateCompletion() {
             listener.processComplete();
         }
 
-        public void simulateError() {
-            listener.processError(new RuntimeException("Some error occurred!"));
-        }
+        public void simulateError() {listener.processError(new RuntimeException("Some error occurred!"));}
     }
 
     public static void main(String[] args) {
@@ -43,10 +39,7 @@ public class FluxPushExample {
             myEventProcessor.register(new SingleThreadEventListener<String>() {
 
                 public void onDataChunk(List<String> chunk) {
-                    for (String s : chunk) {
-                        sink.next(s);
-                    }
-                }
+                    for (String s : chunk) {sink.next(s);}}
 
                 public void processComplete() {
                     sink.complete();
@@ -55,6 +48,7 @@ public class FluxPushExample {
                 public void processError(Throwable e) {
                     sink.error(e);
                 }
+                // 익명 클래스들 onDataChunk, processComplete, processError
             });
         });
 
