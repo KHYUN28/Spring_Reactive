@@ -16,12 +16,31 @@ public class EmitCharactersByFluxSink {
         log.info("sequence1: {}", sequence1);
         log.info("sequence2: {}", sequence2);
 
+        // public class CharacterCreator {
+        //    public Consumer<List<Character>> consumer; // consumer -> captured variable
+        //
+        //    public Flux<Character> createCharacterSequence() {
+        //        return Flux.create(
+        //                sink -> CharacterCreator.this.consumer =
+        //                        items -> items.forEach(sink::next)); // accept 부분의 바디 // iteravale 이라 forEach 가능
+        //    }
+
         CharacterCreator characterCreator = new CharacterCreator();
-        Thread producerThread1 = new Thread(() -> characterCreator.consumer.accept(sequence1));
-        Thread producerThread2 = new Thread(() -> characterCreator.consumer.accept(sequence2));
+        Thread producerThread1 = new Thread(
+                () -> characterCreator.consumer.accept(sequence1)); // run 메서드의 바디
+        Thread producerThread2 = new Thread(
+                () -> characterCreator.consumer.accept(sequence2));
+
+        //Thread.java 핵심코드
+        //   @Override
+        //    public void run() {
+        //        if (target != null) {
+        //            target.run();
+        //        }
+        //    }
 
         List<Character> consolidated = new ArrayList<>();
-        characterCreator.createCharacterSequence().subscribe(consolidated::add);
+        characterCreator.createCharacterSequence().subscribe(consolidated::add); //consolidated::add 메소드 참조
 
         try {
             producerThread1.start();

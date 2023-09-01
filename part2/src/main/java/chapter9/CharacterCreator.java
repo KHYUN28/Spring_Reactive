@@ -9,6 +9,8 @@ public class CharacterCreator {
     public Consumer<List<Character>> consumer; // consumer -> captured variable
 
     public Flux<Character> createCharacterSequence() {
-        return Flux.create(sink -> CharacterCreator.this.consumer = items -> items.forEach(sink::next));
+        return Flux.create(
+                sink -> CharacterCreator.this.consumer =
+                        items -> items.forEach(sink::next)); // accept 부분의 바디 // iteravale 이라 forEach 가능
     }
 }

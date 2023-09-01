@@ -2,7 +2,9 @@ package chapter9;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class FluxCreateSample {
 
     // Flux.create()는 Reactor의 Flux 클래스에서 제공하는 메소드 중 하나로, 개발자가 프로그래밍적으로 데이터를 방출할 수 있게 해줍니다.
@@ -13,9 +15,13 @@ public class FluxCreateSample {
     //   1. Flux.create()를 호출하면서 FluxSink를 처리하는 람다나 메소드 레퍼런스를 제공합니다.
     //   2. FluxSink의 next(), error(), complete() 메소드를 사용하여 이벤트를 방출합니다.
     public static void main(String[] args) {
-        Flux<String> dynamicFlux = Flux.create(sink -> {
+        Flux<String> dynamicFlux = Flux.create(
+                sink -> {
+            log.info("-------- Hello");
             sink.next("Hello");
+            log.info("-------- World");
             sink.next("World");
+            log.info("-------- complete");
             sink.complete();
         });
 
