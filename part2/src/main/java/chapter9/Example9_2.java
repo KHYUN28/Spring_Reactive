@@ -22,7 +22,7 @@ public class Example9_2 {
                 .range(1, tasks)
                 .forEach(n -> {
                     try {
-                        new Thread(() -> {
+                        new Thread(() -> { // 익명 클래스
                             unicastSink.emitNext(doTask(n), Sinks.EmitFailureHandler.FAIL_FAST);
                             log.info("# emitted: {}", n);
                         }).start();
