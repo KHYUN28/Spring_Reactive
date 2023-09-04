@@ -23,7 +23,7 @@ public class Example11_5 {
                 .subscribe(data -> log.info("# subscribe1 onNext: {}", data));
 
         mono.contextWrite(context -> context.put(key1, "Microsoft"))
-                .subscribe(data -> log.info("# subscribe2 onNext: {}", data));
+                .subscribe(data -> log.info("# subscribe2 onNext: {}", data)); // Subscriber이 2명이랑 Context도 2개 만들어짐
 
         Thread.sleep(100L);
     }

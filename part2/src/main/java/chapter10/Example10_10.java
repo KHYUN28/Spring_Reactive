@@ -14,11 +14,9 @@ import reactor.core.scheduler.Schedulers;
 public class Example10_10 {
     public static void main(String[] args) throws InterruptedException {
         doTask("task1")
-                .subscribe(data -> log.info("# onNext: {}", data));
-
+                .subscribe(data -> log.info("# --------- task1 onNext: {}", data));
         doTask("task2")
-                .subscribe(data -> log.info("# onNext: {}", data));
-
+                .subscribe(data -> log.info("# --------- task2 onNext: {}", data));
         Thread.sleep(200L);
     }
 

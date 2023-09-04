@@ -15,10 +15,8 @@ public class Example10_11 {
     public static void main(String[] args) throws InterruptedException {
         doTask("task1")
                 .subscribe(data -> log.info("# onNext: {}", data));
-
         doTask("task2")
                 .subscribe(data -> log.info("# onNext: {}", data));
-
         Thread.sleep(200L);
     }
 

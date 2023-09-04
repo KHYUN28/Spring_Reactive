@@ -6,7 +6,7 @@ import reactor.core.publisher.Sinks;
 
 import static reactor.core.publisher.Sinks.EmitFailureHandler.FAIL_FAST;
 
-/**
+/*
  * Sinks.Many 예제
  *  - replay()를 사용하여 이미 emit된 데이터 중에서 특정 개수의 최신 데이터만 전달하는 예제
  */
@@ -34,8 +34,6 @@ public class Example9_10 {
         fluxView.subscribe(data -> log.info("# Subscriber1: {}", data));
 
         // 단계 5: replaySink에 더 많은 데이터를 발행발행합니다.
-        // - `.emitNext(4, FAIL_FAST)`는 값 4를 replaySink에 발행합니다.
-        // - 제한이 2이므로 가장 오래된 값인 1이 재생 버퍼에서 제거되고 4가 추가됩니다.
         replaySink.emitNext(4, FAIL_FAST);
 
         // 단계 6: 두 번째 구독자 (Subscriber2)로 fluxView에 구독합니다.

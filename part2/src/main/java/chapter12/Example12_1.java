@@ -24,10 +24,11 @@ public class Example12_1 {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        Hooks.onOperatorDebug();
+        Hooks.onOperatorDebug(); // 애를 쓰면 디버그
 
         Flux
-                .fromArray(new String[]{"BANANAS", "APPLES", "PEARS", "MELONS"})
+//                .fromArray(new String[]{"BANANAS", "APPLES", "PEARS", "MELONS"})
+                .fromArray(new String[]{"BANANAS", "APPLES", "PEARS", "GRAPES"})
                 .subscribeOn(Schedulers.boundedElastic())
                 .publishOn(Schedulers.parallel())
                 .map(String::toLowerCase)

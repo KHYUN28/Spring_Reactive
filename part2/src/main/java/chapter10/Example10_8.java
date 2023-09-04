@@ -23,7 +23,7 @@ public class Example10_8 {
             .publishOn(Schedulers.parallel())
             .map(data -> data * 10)
             .doOnNext(data -> log.info("# doOnNext map: {}", data))
-            .subscribe(data -> log.info("# onNext: {}", data));
+            .subscribe(data -> log.info("# onNext: {}", data)); // 실행되는순간 subscribeOn가 실행 됨
 
         Thread.sleep(500L);
     }

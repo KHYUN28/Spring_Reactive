@@ -14,7 +14,7 @@ import reactor.core.scheduler.Schedulers;
 public class Example10_3 {
     public static void main(String[] args) throws InterruptedException {
         Flux.fromArray(new Integer[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19})
-                .parallel(4)
+                .parallel(4) // Kafka 파티션에 병렬 저장 생각하면 됨.
                 .runOn(Schedulers.parallel())
                 .subscribe(data -> log.info("# onNext: {}", data));
 
