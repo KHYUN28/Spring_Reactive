@@ -19,9 +19,8 @@ public class Example11_6 {
               .deferContextual(ctx -> // Mono를 생성하고, 콘텍스트를 사용하는 람다 함수를 정의합니다.
                       Mono.just(ctx.get(key1)) // 콘텍스트에서 key1에 해당하는 값을 가져와서 Mono로 반환합니다.
               )
-              .publishOn(Schedulers.parallel()) /* 병렬 스케줄러로 스위치합니다. */
+              .publishOn(Schedulers.parallel()) // 병렬 스케줄러로 스위치합니다.
               .contextWrite(context -> context.put(key2, "Bill")) // 콘텍스트에 key2를 "Bill"로 설정합니다.
-
               .transformDeferredContextual((mono, ctx) ->
                       mono.map(data -> data + ", " + ctx.getOrDefault(key2, "Steve")) // Mono의 데이터와 콘텍스트의 key2 값을 조합합니다.
               ) // mono.map은 새로운 모노를 만들어냄.
