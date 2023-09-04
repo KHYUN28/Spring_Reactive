@@ -12,7 +12,7 @@ public class Example12_2 {
     public static void main(String[] args) {
         Flux
             .just(2, 4, 6, 8)
-            .zipWith(Flux.just(1, 2, 3, 0), (x, y) -> x/y)
+            .zipWith(Flux.just(1, 2, 3, 0), (x, y) -> x/y) // 에러남. 0으로 나눌 수 없으므로.
             .map(num -> num + 2)
             .checkpoint()
             .subscribe(
