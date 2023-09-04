@@ -26,9 +26,6 @@ public class Example9_10 {
         Flux<Integer> fluxView = replaySink.asFlux();
 
         // 단계 3: replaySink에 데이터를 발행합니다.
-        // - `.emitNext(1, FAIL_FAST)`는 값 1을 replaySink에 발행합니다.
-        // - `.emitNext(2, FAIL_FAST)`는 값 2를 replaySink에 발행합니다.
-        // - `.emitNext(3, FAIL_FAST)`는 값 3을 replaySink에 발행하지만, 제한 때문에 재생되지 않습니다.
         replaySink.emitNext(1, FAIL_FAST);
         replaySink.emitNext(2, FAIL_FAST);
         replaySink.emitNext(3, FAIL_FAST);
@@ -42,7 +39,6 @@ public class Example9_10 {
         replaySink.emitNext(4, FAIL_FAST);
 
         // 단계 6: 두 번째 구독자 (Subscriber2)로 fluxView에 구독합니다.
-        // - Subscriber2는 마지막으로 발행된 2와 4를 받게 됩니다.
         fluxView.subscribe(data -> log.info("# Subscriber2: {}", data));
     }
 }
