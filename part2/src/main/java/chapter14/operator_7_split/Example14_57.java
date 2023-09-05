@@ -14,12 +14,10 @@ import reactor.core.publisher.Flux;
 public class Example14_57 {
     public static void main(String[] args) {
         Flux.fromIterable(SampleData.books)
-                .groupBy(book -> book.getAuthorName())
-                .flatMap(groupedFlux ->
-                        groupedFlux
-                                .map(book -> book.getBookName() +
-                                        "(" + book.getAuthorName() + ")")
-                                .collectList()
+                .groupBy(book ->
+                        book.getAuthorName())
+                .flatMap(groupedFlux -> groupedFlux.map(book -> book.getBookName() +
+                                        "(" + book.getAuthorName() + ")").collectList()
                 )
                 .subscribe(bookByAuthor ->
                         log.info("# book by author: {}", bookByAuthor));

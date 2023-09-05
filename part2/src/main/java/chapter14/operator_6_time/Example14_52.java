@@ -38,7 +38,7 @@ public class Example14_52 {
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
 
-        Mono.defer(() -> Mono.just(
+        Mono.defer(() -> Mono.just( // Subscribe 하는 시접에 애가 실행되서 만들어짐
                             restTemplate
                                     .exchange(worldTimeUri,
                                             HttpMethod.GET,
@@ -46,7 +46,7 @@ public class Example14_52 {
                                             String.class)
                         )
                 )
-                .repeat(4)
+                .repeat(4) // This results in numRepeat + 1 total subscriptions to the original source. 때문에 총 5번 Subscribe 함
                 .elapsed()
                 .map(response -> {
                     DocumentContext jsonContext =

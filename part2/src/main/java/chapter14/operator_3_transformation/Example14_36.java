@@ -12,7 +12,7 @@ import java.time.Duration;
 public class Example14_36 {
     public static void main(String[] args) throws InterruptedException {
         Flux
-            .zip(
+            .zip( // zip 계산 후 하나의 element로 만듦
                     Flux.just(1, 2, 3).delayElements(Duration.ofMillis(300L)),
                     Flux.just(4, 5, 6).delayElements(Duration.ofMillis(500L)),
                     (n1, n2) -> n1 * n2

@@ -19,6 +19,7 @@ public class Example14_43 {
                     return Flux.error(
                             new IllegalArgumentException("Not allowed multiple of 3"));
                 } else {
+                    log.info("# else: {}" , num);
                     return Mono.just(num * 2);
                 }
             })
