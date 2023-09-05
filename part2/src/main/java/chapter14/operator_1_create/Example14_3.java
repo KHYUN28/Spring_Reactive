@@ -12,7 +12,7 @@ public class Example14_3 {
     public static void main(String[] args) {
         Flux
             .fromStream(() -> SampleData.coinNames.stream())
-            .filter(coin -> coin.equals("BTC") || coin.equals("ETH"))
+            .filter(coin -> coin.equals("BTC") || coin.equals("ETH")) // BTC와 ETH 값 필터링해서 가져옴.
             .subscribe(data -> log.info("{}", data));
     }
 }

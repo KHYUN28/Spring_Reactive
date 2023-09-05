@@ -11,6 +11,7 @@ public class ExampleTest13_4 {
     @Test
     public void divideByTwoTest() {
         Flux<Integer> source = Flux.just(2, 4, 6, 8, 10);
+        // GeneralTestExample의 x가 2 ~ 10, y = 2 ~ 0
         StepVerifier
                 .create(GeneralTestExample.divideByTwo(source))
                 .expectSubscription()

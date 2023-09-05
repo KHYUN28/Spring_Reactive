@@ -12,8 +12,8 @@ public class ExampleTest13_3 {
         StepVerifier
                 .create(GeneralTestExample.sayHello())
                 .expectSubscription()
-                .as("# expect subscription")
-                .expectNext("Hi")
+                .as("# expect subscription") // 콘솔에 출력
+                .expectNext("Hi") //Hi가 없어서 오류가 남
                 .as("# expect Hi")
                 .expectNext("Reactor")
                 .as("# expect Reactor")
