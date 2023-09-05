@@ -15,19 +15,40 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class Example14_59 {
     public static void main(String[] args) {
+        // SampleData.books에서 Flux를 생성합니다. SampleData.books는 책 정보를 포함한 리스트입니다.
         Flux.fromIterable(SampleData.books)
-                .groupBy(book -> book.getAuthorName())
+                .groupBy(book -> book.getAuthorName()) // 작가 이름을 기준으로 그룹화합니다.
                 .flatMap(groupedFlux ->
-                    Mono
-                        .just(groupedFlux.key())
-                        .zipWith(
-                            groupedFlux
-                                .map(book ->
-                                    (int)(book.getPrice() * book.getStockQuantity() * 0.1))
-                                .reduce((y1, y2) -> y1 + y2),
-                                    (authorName, sumRoyalty) ->
-                                        authorName + "'s royalty: " + sumRoyalty)
+                        Mono
+                            .just(groupedFlux.key())
+                                .doOnNext(data->log.info("key : {}"), data.ge)
+                                .zipWith( // 작가 이름을 Mono로 감싸서 발행합니다.
+                                    groupedFlux.doOnNext(book -> log.info("Who : {}", book.getAuthorName()))
+                                            .map(book ->
+                                                    (int)(book.getPrice() * book.getStockQuantity() * 0.1)) // 각 책의 로열티를 계산합니다.
+                                            .doOnNext(data -> log.info("doOnNext:{}",data))
+                                            .reduce((y1, y2) -> y1 + y2), // 로열티를 합산합니다.
+                                    (authorName, sumRoyalty) -> authorName + "'s royalty: " + sumRoyalty) // 작가 이름과 로열티를 조합하여 결과를 생성합니다.
                 )
-                .subscribe(log::info);
+                .subscribe(log::info); // 결과를 로그에 출력합니다.
     }
 }
+
+//public class Example14_59 {
+//    public static void main(String[] args) {
+//        Flux.fromIterable(SampleData.books)
+//                .groupBy(book -> book.getAuthorName())
+//                .flatMap(groupedFlux ->
+//                    Mono
+//                        .just(groupedFlux.key())
+//                        .zipWith(
+//                            groupedFlux
+//                                .map(book ->
+//                                    (int)(book.getPrice() * book.getStockQuantity() * 0.1))
+//                                .reduce((y1, y2) -> y1 + y2),
+//                                    (authorName, sumRoyalty) ->
+//                                        authorName + "'s royalty: " + sumRoyalty)
+//                )
+//                .subscribe(log::info);
+//    }
+//}
