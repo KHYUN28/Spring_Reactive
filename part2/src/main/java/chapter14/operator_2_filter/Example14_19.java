@@ -12,8 +12,8 @@ import java.time.Duration;
 public class Example14_19 {
     public static void main(String[] args) throws InterruptedException {
         Flux
-            .interval(Duration.ofMillis(300))
-            .skip(Duration.ofSeconds(1))
+            .interval(Duration.ofMillis(300)) // 300ms마다 출력
+            .skip(Duration.ofSeconds(1)) // 1초 스킵이라서 0,1,2 스킵
             .subscribe(data -> log.info("# onNext: {}", data));
 
         Thread.sleep(2000L);
