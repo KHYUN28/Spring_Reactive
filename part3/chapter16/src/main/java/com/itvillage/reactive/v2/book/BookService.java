@@ -26,6 +26,10 @@ public class BookService {
         });
     }
 
+    // createBook(), updateBook()의 경우，아직 데이터 액세스 계층과 연동하지 않기 때문에
+    // Controller에서 전달받은 Mono 내부에서 Mapper를 이용해 DTO 클래스의 객체를 엔티티 클래스 객체로
+    // 변환한 후，Comroller로 되돌려주고 있습니다.
+
     public Mono<Book> findBook(long bookId) {
         return Mono.just(
                     new Book(bookId,
